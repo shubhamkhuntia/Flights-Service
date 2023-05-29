@@ -39,7 +39,7 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    console.log("Trying CRUD repo");
+    console.log("Trying update function in CRUD repo");
     const response = await this.model.update(data, {
       where: {
         id: id,

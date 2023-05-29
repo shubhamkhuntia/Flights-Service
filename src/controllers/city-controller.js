@@ -19,7 +19,8 @@ async function createCity(req, res) {
 async function deleteCity(req, res) {
   try {
     const city = await CityService.deleteCity(req.params.id);
-    return city;
+    SuccessResponse.data = city;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
@@ -30,7 +31,9 @@ async function updateCity(req, res) {
   try {
     console.log("Trying update controller");
     const city = await CityService.updateCity(req.params.id, req.body.name);
-    return city;
+
+    SuccessResponse.data = city;
+    return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
