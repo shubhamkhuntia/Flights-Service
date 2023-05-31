@@ -60,6 +60,8 @@ async function updateAirplane(req, res) {
       req.params.id,
       req.body.capacity
     );
+    SuccessResponse.data = response;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
     return res.status(error.status).json(ErrorResponse);

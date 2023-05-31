@@ -28,6 +28,21 @@ async function createCity(data) {
   }
 }
 
+async function deleteCity(id) {
+  try {
+    const response = await cityRepository.destroy(id);
+    return response;
+  } catch (error) {
+    if (error.statusCode == StatusCodes.NOT_FOUND) {
+      throw new AppError(
+        "The city you requested to delete is not present",
+        error.statusCode
+      );
+    }
+    throw new AppError("Cannnot delete city", statusCode.INTERNAL_SERVER_ERROR);
+  }
+}
+
 async function updateCity(id, data) {
   try {
     console.log("Trying update service");
@@ -41,21 +56,6 @@ async function updateCity(id, data) {
       );
     }
     throw new AppError("Cannot update City", statusCode.BAD_REQUEST);
-  }
-}
-
-async function deleteCity(id) {
-  try {
-    const response = await cityRepository.destroy(id);
-    return response;
-  } catch (error) {
-    if (error.statusCode == StatusCodes.NOT_FOUND) {
-      throw new AppError(
-        "The city you requested to delete is not present",
-        error.statusCode
-      );
-    }
-    throw new AppError("Cannnot delete city", statusCode.INTERNAL_SERVER_ERROR);
   }
 }
 
