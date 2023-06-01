@@ -1,10 +1,10 @@
 const { StatusCodes } = require("http-status-codes");
+
 const { Logger } = require("../config");
 const AppError = require("../utils/errors/app-error");
 
 class CrudRepository {
   constructor(model) {
-    console.log("Inside CRU REPO construcor");
     this.model = model;
   }
 
@@ -20,7 +20,10 @@ class CrudRepository {
       },
     });
     if (!response) {
-      throw new AppError("Resource Not found", StatusCodes.NOT_FOUND);
+      throw new AppError(
+        "Not able to fund the resource",
+        StatusCodes.NOT_FOUND
+      );
     }
     return response;
   }
@@ -28,7 +31,10 @@ class CrudRepository {
   async get(data) {
     const response = await this.model.findByPk(data);
     if (!response) {
-      throw new AppError("Resource Not found", StatusCodes.NOT_FOUND);
+      throw new AppError(
+        "Not able to fund the resource",
+        StatusCodes.NOT_FOUND
+      );
     }
     return response;
   }
@@ -39,7 +45,7 @@ class CrudRepository {
   }
 
   async update(id, data) {
-    console.log("Trying update function in CRUD repo");
+    // data -> {col: value, ....}
     const response = await this.model.update(data, {
       where: {
         id: id,

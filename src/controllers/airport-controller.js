@@ -1,26 +1,30 @@
 const { StatusCodes } = require("http-status-codes");
 
-const { AirplaneService } = require("../services");
+const { AirportService } = require("../services");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 
-async function createAirplane(req, res) {
+async function createAirport(req, res) {
   try {
-    const airplane = await AirplaneService.createAirplane({
-      modelNumber: req.body.modelNumber,
-      capacity: req.body.capacity,
+    console.log("createAirport Controller");
+    const airport = await AirportService.createAirport({
+      name: req.body.name,
+      code: req.body.code,
+      address: req.body.address,
+      cityId: req.body.cityId,
     });
-    SuccessResponse.data = airplane;
+    SuccessResponse.data = airport;
     return res.status(StatusCodes.CREATED).json(SuccessResponse);
   } catch (error) {
+    console.log("createAirport ERROR Controller");
     ErrorResponse.error = error;
     return res.status(error.statusCode).json(ErrorResponse);
   }
 }
 
-async function getAirplanes(req, res) {
+async function getAirports(req, res) {
   try {
-    const airplanes = await AirplaneService.getAirplanes();
-    SuccessResponse.data = airplanes;
+    const airports = await AirportService.getAirports();
+    SuccessResponse.data = airports;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
@@ -32,10 +36,10 @@ async function getAirplanes(req, res) {
  * GET : /airplanes/:id
  * req-body {}
  */
-async function getAirplane(req, res) {
+async function getAirport(req, res) {
   try {
-    const airplane = await AirplaneService.getAirplane(req.params.id);
-    SuccessResponse.data = airplane;
+    const airport = await AirportService.getAirport(req.params.id);
+    SuccessResponse.data = airport;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
@@ -43,10 +47,10 @@ async function getAirplane(req, res) {
   }
 }
 
-async function destroyAirplane(req, res) {
+async function destroyAirport(req, res) {
   try {
-    const airplanes = await AirplaneService.destroyAirplane(req.params.id);
-    SuccessResponse.data = airplanes;
+    const resposne = await AirportService.destroyAirport(req.params.id);
+    SuccessResponse.data = resposne;
     return res.status(StatusCodes.OK).json(SuccessResponse);
   } catch (error) {
     ErrorResponse.error = error;
@@ -55,9 +59,9 @@ async function destroyAirplane(req, res) {
 }
 
 // Not tested
-async function updateAirplane(req, res) {
+async function updateAirport(req, res) {
   try {
-    const response = await AirplaneService.updateAirplane(
+    const response = await AirportService.updateAirport(
       req.params.id,
       req.body.capacity
     );
@@ -70,9 +74,9 @@ async function updateAirplane(req, res) {
 }
 
 module.exports = {
-  createAirplane,
-  getAirplanes,
-  getAirplane,
-  destroyAirplane,
-  updateAirplane,
+  createAirport,
+  getAirports,
+  getAirport,
+  destroyAirport,
+  updateAirport,
 };
