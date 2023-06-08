@@ -18,9 +18,6 @@ Lets take a look inside the `src` folder
 
 - `utils` -> contains helper methods, error classes etc.
 
-### Setup the project
-
-- Download this template from github and open it in your favourite text editor.
 - Go inside the folder path and execute the following command:
 
 ```
