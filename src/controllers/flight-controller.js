@@ -3,6 +3,20 @@ const { StatusCodes } = require("http-status-codes");
 const { FlightService } = require("../services");
 const { SuccessResponse, ErrorResponse } = require("../utils/common");
 
+/**
+ * POST : /flights
+ * req-body {
+ *  flightNumber: 'UK 808',
+ *  airplaneId: 'a380',
+ *  departureAirportId: 12,
+ *  arrivalAirportId: 11,
+ *  arrivalTime: '11:10:00',
+ *  departureTime: '9:10:00',
+ *  price: 2000
+ *  boardingGate: '12A',
+ *  totalSeats: 120
+ * }
+ */
 async function createFlight(req, res) {
   try {
     console.log("createAirport Controller");
@@ -38,7 +52,23 @@ async function getAllFlights(req, res) {
   }
 }
 
+/**
+ * GET : /flights/:id
+ * req-body {}
+ */
+async function getFlight(req, res) {
+  try {
+    const flight = await FlightService.getFlight(req.params.id);
+    SuccessResponse.data = flight;
+    return res.status(StatusCodes.OK).json(SuccessResponse);
+  } catch (error) {
+    ErrorResponse.error = error;
+    return res.status(error.statusCode).json(ErrorResponse);
+  }
+}
+
 module.exports = {
   createFlight,
   getAllFlights,
+  getFlight,
 };
